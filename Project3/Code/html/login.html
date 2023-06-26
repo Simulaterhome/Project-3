@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide For Summer</title>
+    <link rel="shortcut icon" href="../Picture/MainIcon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="containerl">
+        <!-- <img src="../Picture/MainScreen.png" draggable="false" class="Mpicture"> -->
+        <div class="wrapper">
+            <a href="MainScr.html">
+                <span class="icon-close" style="z-index: 1;">
+                    <ion-icon name="close"></ion-icon>
+                </span>
+            </a>
+            <div class="form-box">
+                <p class="htext">Đăng nhập</p>
+                <div class="input">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="text" id="email" name="email" required>
+                    <!-- <input type="" required> -->
+                    <label>Email</label>
+                </div>
+                <div class="input">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" id="password" name="password" required>
+                    <label>Mật khẩu</label>
+                </div>
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox">Lưu tài khoản
+                    </label>
+                    <a href="#" style="cursor: pointer;">Quên mật khẩu?</a>
+                </div>
+                <input type="submit" id="login" name="login" value="Đăng nhập" class="btn"></input>
+                <div class="login-register">
+                    <p>Không có tài khoản? <a href="signup.html" class="register-link" style="cursor: pointer;">Đăng
+                            ký</a></p>
+                </div>
+            </div>
+
+        </div>
+        <!-- <div class="box">
+            <a href="#" class="text login-open">Đăng Nhập</a>
+            <p class="text">/</p>
+            <a href="#" class="text register-open">Đăng Ký</a>
+        </div> -->
+    </div>
+    <!-- <script src="../js/main.js"></script> -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module">
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDd5pDOqOYwyceId5CGS3FnWeNWRq99XxY",
+            authDomain: "summer-d1e95.firebaseapp.com",
+            databaseURL: "https://summer-d1e95-default-rtdb.firebaseio.com",
+            projectId: "summer-d1e95",
+            storageBucket: "summer-d1e95.appspot.com",
+            messagingSenderId: "475468339460",
+            appId: "1:475468339460:web:2c87de911cf1cb83ac9851"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+
+        login.addEventListener('click', (e) => {
+
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    const dt = new Date();
+
+                    update(ref(database, 'user/' + user.uid), {
+                        last_login: dt,
+                    })
+                    alert('User loged in')
+                    window.location = "./Choosing.html"
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(erroMessage)
+                });
+        })
+
+
+    </script>
+</body>
+
+</html>
